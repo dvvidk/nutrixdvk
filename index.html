@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NutriTrack iPhone</title>
+  <meta name="theme-color" content="#7c3aed" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NutriTrack" />
+  <style>
+    :root,[data-theme="light"]{--bg:#fff7fb;--bg2:#fff1f8;--surface:rgba(255,255,255,.74);--surface-2:rgba(255,255,255,.58);--text:#241a33;--muted:#6f6682;--border:rgba(124,58,237,.12);--primary:#7c3aed;--secondary:#06b6d4;--accent:#f43f5e;--ok:#22c55e;--warn:#f59e0b;--shadow:0 18px 40px rgba(124,58,237,.16);--r:28px;--r2:20px;--font:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+    [data-theme="dark"]{--bg:#120f1e;--bg2:#171326;--surface:rgba(28,23,43,.82);--surface-2:rgba(35,29,51,.78);--text:#f5efff;--muted:#b7aecd;--border:rgba(255,255,255,.08);--primary:#a78bfa;--secondary:#22d3ee;--accent:#fb7185;--ok:#4ade80;--warn:#fbbf24;--shadow:0 22px 45px rgba(0,0,0,.35)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth;-webkit-text-size-adjust:100%} body{margin:0;font-family:var(--font);color:var(--text);background:radial-gradient(circle at top left,#f0abfc 0%,transparent 28%),radial-gradient(circle at top right,#67e8f9 0%,transparent 22%),linear-gradient(180deg,var(--bg),var(--bg2));min-height:100vh}
+    body::before{content:'';position:fixed;inset:0;backdrop-filter:saturate(120%);pointer-events:none}
+    .app{max-width:920px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 14px calc(110px + env(safe-area-inset-bottom))}
+    .glass{background:var(--surface);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border);box-shadow:var(--shadow)}
+    .top{position:sticky;top:0;z-index:9;padding-bottom:10px;background:linear-gradient(to bottom,rgba(255,247,251,.88) 65%,transparent)}
+    [data-theme="dark"] .top{background:linear-gradient(to bottom,rgba(18,15,30,.92) 65%,transparent)}
+    .bar{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:grid;place-items:center;color:#fff;font-size:28px}.title{font-size:clamp(1.5rem,2vw,2.2rem);font-weight:900;letter-spacing:-.04em}.sub{color:var(--muted);margin-top:4px;font-size:.96rem}
+    .icon{width:50px;height:50px;border-radius:18px;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+    .hero{border-radius:32px;padding:18px;display:grid;gap:16px}.badge{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:linear-gradient(90deg,rgba(124,58,237,.16),rgba(6,182,212,.16));color:var(--primary);font-size:.78rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;width:max-content}
+    .headline{display:grid;gap:6px}.headline h2{margin:0;font-size:1.4rem}.targets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.target{padding:14px;border-radius:22px;background:var(--surface-2);border:1px solid var(--border)}.target small{display:block;color:var(--muted)}.target strong{display:block;margin-top:4px;font-size:1.08rem}
+    .rings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.ringCard{padding:14px;border-radius:24px;background:var(--surface-2);border:1px solid var(--border);text-align:center}.ring{width:88px;height:88px;margin:0 auto 10px;display:block}.ring text{font-weight:800;font-size:14px;fill:var(--text)}
+    .section{margin-top:16px}.card{border-radius:28px;padding:16px}.grid{display:grid;gap:12px}.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.tab{white-space:nowrap;padding:11px 14px;border-radius:16px;border:1px solid var(--border);background:var(--surface-2);font-weight:800;color:var(--text)}.tab.active{background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff;border-color:transparent}
+    .layout{display:grid;grid-template-columns:1.25fr .9fr;gap:12px}.foods{display:grid;gap:10px}.food{padding:14px;border-radius:24px;background:var(--surface-2);border:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.food strong{font-size:1rem}.meta{color:var(--muted);font-size:.88rem;margin-top:4px}.counter{display:flex;gap:8px;align-items:center}.counter button{width:42px;height:42px;border-radius:15px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:1.2rem}.counter input{width:58px;border-radius:14px;border:1px solid var(--border);background:transparent;color:var(--text);padding:10px;text-align:center}
+    .actionCard h3,.mini h3{margin:0 0 10px}.btns{display:grid;gap:10px}.btn{padding:14px 16px;border-radius:18px;border:1px solid var(--border);font-weight:900}.primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border-color:transparent}.secondaryBtn{background:var(--surface-2);color:var(--text)}
+    .waterRow{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:10px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);font-weight:800}
+    .statGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stat{padding:14px;border-radius:22px;background:var(--surface-2);border:1px solid var(--border)}.big{font-size:1.9rem;font-weight:900;letter-spacing:-.04em}.progress{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.35);margin-top:8px}.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--accent));width:0%}
+    .macro{padding:14px;border-radius:22px;background:var(--surface-2);border:1px solid var(--border)}.macroTop{display:flex;justify-content:space-between;gap:8px;font-weight:800}.small{color:var(--muted);font-size:.9rem}
+    .check{display:grid;gap:8px}.checkItem{padding:12px;border-radius:18px;background:var(--surface-2);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px}.dot{width:12px;height:12px;border-radius:999px;background:var(--warn)}.dot.ok{background:var(--ok)}
+    .history{display:grid;gap:8px}.historyItem{padding:13px;border-radius:18px;background:var(--surface-2);border:1px solid var(--border);display:flex;justify-content:space-between;gap:12px}
+    table{width:100%;border-collapse:collapse} th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top} th{color:var(--muted);font-size:.88rem}
+    .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(920px,100%);padding:10px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(255,247,251,.92) 70%,transparent)} [data-theme="dark"] .nav{background:linear-gradient(to top,rgba(18,15,30,.94) 70%,transparent)} .navin{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;border-radius:28px}.navBtn{min-height:54px;border-radius:18px;border:1px solid var(--border);background:var(--surface);font-weight:900;color:var(--muted)}.navBtn.active{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border-color:transparent}
+    .hidden{display:none!important}
+    @media (max-width:760px){.targets{grid-template-columns:repeat(2,minmax(0,1fr))}.rings{grid-template-columns:repeat(2,minmax(0,1fr))}.layout,.statGrid{grid-template-columns:1fr}.app{padding-left:12px;padding-right:12px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="bar">
+      <div class="brand">
+        <div class="logo">🍎</div>
+        <div>
+          <div class="title">NutriTrack iPhone</div>
+          <div class="sub">Diseño más interactivo, brillante y cómodo para celular</div>
+        </div>
+      </div>
+      <button class="icon glass" id="themeBtn">◐</button>
+    </div>
+  </header>
+
+  <section class="hero glass">
+    <span class="badge">Déficit calórico deportivo</span>
+    <div class="headline">
+      <h2>Pauta cargada y lista para usar</h2>
+      <div class="sub">Configurada con las metas de tu plan y preparada para guardarse como web app en iPhone.</div>
+    </div>
+    <div class="targets">
+      <div class="target"><small>Calorías</small><strong>1780 kcal</strong></div>
+      <div class="target"><small>Proteínas</small><strong>130 g</strong></div>
+      <div class="target"><small>Carbohidratos</small><strong>180 g</strong></div>
+      <div class="target"><small>Grasas</small><strong>60 g</strong></div>
+      <div class="target"><small>Agua</small><strong>3.0 L</strong></div>
+    </div>
+    <div class="rings" id="ringWrap"></div>
+  </section>
+
+  <section class="section" id="screen-registro">
+    <div class="card glass grid">
+      <h2>Registro inteligente</h2>
+      <div class="tabs" id="mealTabs"></div>
+      <div class="layout">
+        <div class="foods" id="foodList"></div>
+        <div class="grid">
+          <div class="card mini glass actionCard">
+            <h3>Agua</h3>
+            <div class="waterRow">
+              <button class="chip waterBtn" data-water="0.2">+200 ml</button>
+              <button class="chip waterBtn" data-water="0.5">+500 ml</button>
+              <button class="chip waterBtn" data-water="1">+1 litro</button>
+            </div>
+          </div>
+          <div class="card mini glass actionCard">
+            <h3>Acciones</h3>
+            <div class="btns">
+              <button class="btn primary" id="saveBtn">Guardar día</button>
+              <button class="btn secondaryBtn" id="resetBtn">Reiniciar</button>
+              <button class="btn secondaryBtn" id="exportBtn">Exportar datos</button>
+            </div>
+          </div>
+          <div class="card mini glass actionCard">
+            <h3>Meta por grupos</h3>
+            <div class="small">Proteínas 7 · Lácteos 1-2 · Cereales 2-3 · Verduras 2-4 · Grasas 2 · Frutas 1-2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hidden" id="screen-resumen">
+    <div class="card glass grid">
+      <h2>Resumen del día</h2>
+      <div class="statGrid">
+        <div class="stat"><div class="small">Consumido</div><div class="big" id="kcalTxt">0 kcal</div><div class="progress"><div class="fill" id="kcalFill"></div></div></div>
+        <div class="stat"><div class="small">Agua</div><div class="big" id="waterTxt">0.0 L</div><div class="progress"><div class="fill" id="waterFill"></div></div></div>
+      </div>
+      <div class="grid" id="macroWrap"></div>
+      <div>
+        <h3>Chequeo de porciones</h3>
+        <div class="check" id="checkWrap"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hidden" id="screen-historial">
+    <div class="card glass grid">
+      <h2>Historial</h2>
+      <div class="history" id="historyWrap"></div>
+      <div class="small" id="emptyHistory">Todavía no hay días guardados.</div>
+    </div>
+  </section>
+
+  <section class="section hidden" id="screen-plan">
+    <div class="card glass grid">
+      <h2>Pauta</h2>
+      <table>
+        <tr><th>Bloque</th><th>Estructura</th></tr>
+        <tr><td>Comida 1</td><td>3 proteínas + 1 cereal + 1 grasa</td></tr>
+        <tr><td>Colación</td><td>1 lácteo proteico</td></tr>
+        <tr><td>Comida 2</td><td>2 proteínas + 1 cereal + 2 verduras</td></tr>
+        <tr><td>Colación 2</td><td>1 scoop proteína + 1 fruta</td></tr>
+        <tr><td>Comida 3</td><td>2 proteínas + 1 cereal + 2 verduras</td></tr>
+      </table>
+      <table>
+        <tr><th>Suplemento</th><th>Uso sugerido</th></tr>
+        <tr><td>Omega 3</td><td>1-2 cápsulas en desayuno</td></tr>
+        <tr><td>Vitamina C</td><td>1 pastilla de 1000 en desayuno</td></tr>
+        <tr><td>Creatina</td><td>7 g, a cualquier hora</td></tr>
+      </table>
+      <div class="small">Tip para iPhone: abre esta app en Safari y elige “Agregar a pantalla de inicio”. Así se ve y se usa como app.</div>
+    </div>
+  </section>
+</div>
+
+<nav class="nav"><div class="navin glass">
+  <button class="navBtn active" data-screen="registro">Registro</button>
+  <button class="navBtn" data-screen="resumen">Resumen</button>
+  <button class="navBtn" data-screen="historial">Historial</button>
+  <button class="navBtn" data-screen="plan">Pauta</button>
+</div></nav>
+
+<script>
+const TARGETS={kcal:1780,carbs:180,protein:130,fat:60,water:3};
+const GROUPS={proteinas:[7,7],lacteos:[1,2],cereales:[2,3],verduras:[2,4],grasas:[2,2],frutas:[1,2]};
+const MEALS=[['desayuno','Comida 1'],['colacion','Colación'],['almuerzo','Comida 2'],['post','Colación 2'],['cena','Comida 3']];
+const FOODS=[
+{id:'huevo',meal:'desayuno',name:'Huevo',serving:'1 unidad',kcal:70,p:6,c:.4,f:5,group:'proteinas',portion:1,emoji:'🥚'},
+{id:'pan',meal:'desayuno',name:'Pan molde',serving:'2 rebanadas',kcal:140,p:6,c:26,f:2,group:'cereales',portion:1,emoji:'🍞'},
+{id:'palta',meal:'desayuno',name:'Palta',serving:'1/2 unidad',kcal:120,p:2,c:6,f:11,group:'grasas',portion:1,emoji:'🥑'},
+{id:'avena',meal:'desayuno',name:'Avena',serving:'20 g',kcal:76,p:3,c:13,f:1.5,group:'cereales',portion:1,emoji:'🥣'},
+{id:'frutos',meal:'desayuno',name:'Frutos secos',serving:'30 g',kcal:180,p:6,c:6,f:15,group:'grasas',portion:1,emoji:'🌰'},
+{id:'yogurt',meal:'colacion',name:'Yogurt protein',serving:'1 unidad',kcal:100,p:15,c:8,f:0,group:'lacteos',portion:1,emoji:'🥛'},
+{id:'barrita',meal:'colacion',name:'Barrita proteína',serving:'1 unidad',kcal:180,p:15,c:18,f:6,group:'lacteos',portion:1,emoji:'🍫'},
+{id:'leche',meal:'colacion',name:'Leche protein',serving:'200 cc',kcal:110,p:12,c:10,f:2.5,group:'lacteos',portion:1,emoji:'🥤'},
+{id:'pollo',meal:'almuerzo',name:'Pechuga de pollo',serving:'160 g',kcal:264,p:50,c:0,f:6,group:'proteinas',portion:2,emoji:'🍗'},
+{id:'atun',meal:'almuerzo',name:'Atún en lata',serving:'1 lata',kcal:132,p:28,c:0,f:1,group:'proteinas',portion:2,emoji:'🐟'},
+{id:'arroz',meal:'almuerzo',name:'Arroz cocido',serving:'120 g',kcal:156,p:3,c:34,f:.4,group:'cereales',portion:1,emoji:'🍚'},
+{id:'fideos',meal:'almuerzo',name:'Fideos cocidos',serving:'120 g',kcal:188,p:7,c:38,f:1.2,group:'cereales',portion:1,emoji:'🍝'},
+{id:'papa',meal:'almuerzo',name:'Papa cocida',serving:'150 g',kcal:116,p:3,c:26,f:.1,group:'cereales',portion:1,emoji:'🥔'},
+{id:'ensalada',meal:'almuerzo',name:'Ensalada',serving:'1 porción',kcal:25,p:1,c:5,f:0,group:'verduras',portion:1,emoji:'🥗'},
+{id:'scoop',meal:'post',name:'Scoop proteína',serving:'1 scoop',kcal:120,p:24,c:3,f:2,group:'proteinas',portion:1,emoji:'💪'},
+{id:'platano',meal:'post',name:'Plátano',serving:'1 unidad',kcal:105,p:1,c:27,f:.4,group:'frutas',portion:1,emoji:'🍌'},
+{id:'burrito',meal:'cena',name:'Burrito XL',serving:'1 unidad',kcal:220,p:7,c:35,f:5,group:'cereales',portion:1,emoji:'🌯'},
+{id:'hambSoja',meal:'cena',name:'Hamburguesa de soja',serving:'2 unidades',kcal:220,p:12,c:26,f:7,group:'proteinas',portion:2,emoji:'🫘'},
+{id:'hambLeg',meal:'cena',name:'Hamburguesa legumbres',serving:'2 unidades',kcal:220,p:12,c:26,f:7,group:'proteinas',portion:2,emoji:'🍔'},
+{id:'tomate',meal:'cena',name:'Tomate',serving:'1 unidad',kcal:22,p:1,c:5,f:.2,group:'verduras',portion:1,emoji:'🍅'},
+{id:'frutosRojos',meal:'cena',name:'Frutos rojos',serving:'40 g',kcal:20,p:.3,c:5,f:0,group:'frutas',portion:1,emoji:'🫐'}
+];
+const state={meal:'desayuno',qty:{},water:0,history:JSON.parse(localStorage.getItem('nt_history_v3')||'[]'),theme:localStorage.getItem('nt_theme_v3')||'light'};FOODS.forEach(f=>state.qty[f.id]=0);
+function saveLocal(){localStorage.setItem('nt_history_v3',JSON.stringify(state.history));localStorage.setItem('nt_theme_v3',state.theme)}
+function totals(){const t={kcal:0,protein:0,carbs:0,fat:0,water:state.water,groups:{proteinas:0,lacteos:0,cereales:0,verduras:0,grasas:0,frutas:0}};FOODS.forEach(f=>{const q=+state.qty[f.id]||0;t.kcal+=f.kcal*q;t.protein+=f.p*q;t.carbs+=f.c*q;t.fat+=f.f*q;t.groups[f.group]+=f.portion*q});return t}
+function pct(v,t){return Math.min(100,Math.max(0,Math.round(v/t*100)))}
+function ringSVG(value,target,label,color1,color2){const p=Math.min(100,Math.round((value/target)*100));const r=34,c=2*Math.PI*r,off=c-(p/100)*c;return `<svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="g${label}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${color1}"/><stop offset="1" stop-color="${color2}"/></linearGradient></defs><circle cx="50" cy="50" r="34" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="10"/><circle cx="50" cy="50" r="34" fill="none" stroke="url(#g${label})" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 50 50)"/><text x="50" y="47" text-anchor="middle">${p}%</text><text x="50" y="64" text-anchor="middle" font-size="11" fill="currentColor">${label}</text></svg>`}
+function renderRings(){const t=totals();document.getElementById('ringWrap').innerHTML=[['Kcal',t.kcal,TARGETS.kcal,'#7c3aed','#06b6d4'],['Prot',t.protein,TARGETS.protein,'#22c55e','#06b6d4'],['Carbs',t.carbs,TARGETS.carbs,'#f59e0b','#f43f5e'],['Agua',t.water,TARGETS.water,'#06b6d4','#7c3aed']].map(r=>`<div class="ringCard">${ringSVG(r[1],r[2],r[0],r[3],r[4])}<div class="small">${typeof r[1]==='number'? (r[0]==='Agua'? r[1].toFixed(1)+' L':Math.round(r[1])):r[1]} / ${r[0]==='Agua'? r[2]+' L':r[2]}</div></div>`).join('')}
+function renderTabs(){const el=document.getElementById('mealTabs');el.innerHTML=MEALS.map(m=>`<button class="tab ${state.meal===m[0]?'active':''}" data-meal="${m[0]}">${m[1]}</button>`).join('');el.querySelectorAll('[data-meal]').forEach(b=>b.onclick=()=>{state.meal=b.dataset.meal;renderTabs();renderFoods()})}
+function renderFoods(){document.getElementById('foodList').innerHTML=FOODS.filter(f=>f.meal===state.meal).map(f=>`<div class="food"><div><strong>${f.emoji} ${f.name}</strong><div class="meta">${f.serving} · ${f.kcal} kcal · P ${f.p} · C ${f.c} · G ${f.f}</div><div class="meta">Grupo ${f.group} · ${f.portion} porción pauta</div></div><div class="counter"><button data-minus="${f.id}">−</button><input type="number" min="0" max="20" step="1" value="${state.qty[f.id]}" data-input="${f.id}"><button data-plus="${f.id}">+</button></div></div>`).join('');document.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>changeQty(b.dataset.minus,-1));document.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>changeQty(b.dataset.plus,1));document.querySelectorAll('[data-input]').forEach(i=>i.oninput=()=>{state.qty[i.dataset.input]=Math.max(0,+i.value||0);renderAll()})}
+function changeQty(id,d){state.qty[id]=Math.max(0,(+state.qty[id]||0)+d);renderFoods();renderAll()}
+function status(val,min,max){return val>=min&&val<=max}
+function renderSummary(){const t=totals();document.getElementById('kcalTxt').textContent=`${Math.round(t.kcal)} kcal`;document.getElementById('waterTxt').textContent=`${t.water.toFixed(1)} L`;document.getElementById('kcalFill').style.width=pct(t.kcal,TARGETS.kcal)+'%';document.getElementById('waterFill').style.width=pct(t.water,TARGETS.water)+'%';document.getElementById('macroWrap').innerHTML=[['Proteínas',t.protein,TARGETS.protein],['Carbohidratos',t.carbs,TARGETS.carbs],['Grasas',t.fat,TARGETS.fat]].map(m=>`<div class="macro"><div class="macroTop"><span>${m[0]}</span><span>${Math.round(m[1])} / ${m[2]} g</span></div><div class="progress"><div class="fill" style="width:${pct(m[1],m[2])}%"></div></div><div class="small">${Math.round(m[2]-m[1])>=0?'Faltan':'Exceso de'} ${Math.abs(Math.round(m[2]-m[1]))} g</div></div>`).join('');
+const checks=[['Proteínas',t.groups.proteinas,...GROUPS.proteinas],['Lácteos',t.groups.lacteos,...GROUPS.lacteos],['Cereales',t.groups.cereales,...GROUPS.cereales],['Verduras',t.groups.verduras,...GROUPS.verduras],['Grasas',t.groups.grasas,...GROUPS.grasas],['Frutas',t.groups.frutas,...GROUPS.frutas]];document.getElementById('checkWrap').innerHTML=checks.map(c=>`<div class="checkItem"><div><strong>${c[0]}</strong><div class="small">Meta ${c[2]}${c[2]===c[3]?'':'-'+c[3]}</div></div><div style="display:flex;align-items:center;gap:10px"><span class="dot ${status(c[1],c[2],c[3])?'ok':''}"></span><strong>${c[1]}</strong></div></div>`).join('')}
+function renderHistory(){const wrap=document.getElementById('historyWrap'),empty=document.getElementById('emptyHistory');if(!state.history.length){wrap.innerHTML='';empty.style.display='block';return}empty.style.display='none';wrap.innerHTML=[...state.history].reverse().map(d=>`<div class="historyItem"><div><strong>${d.date}</strong><div class="small">${d.kcal} kcal · P ${d.protein} g · C ${d.carbs} g · G ${d.fat} g · Agua ${d.water} L</div></div><div class="small">${d.items} ítems</div></div>`).join('')}
+function renderAll(){renderSummary();renderHistory();renderRings()}
+function switchScreen(s){document.getElementById('screen-registro').classList.toggle('hidden',s!=='registro');document.getElementById('screen-resumen').classList.toggle('hidden',s!=='resumen');document.getElementById('screen-historial').classList.toggle('hidden',s!=='historial');document.getElementById('screen-plan').classList.toggle('hidden',s!=='plan');document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.screen===s));if(s!=='registro')renderAll()}
+document.querySelectorAll('.navBtn').forEach(b=>b.onclick=()=>switchScreen(b.dataset.screen));document.querySelectorAll('.waterBtn').forEach(b=>b.onclick=()=>{state.water=+(state.water+(+b.dataset.water)).toFixed(2);renderAll()});document.getElementById('resetBtn').onclick=()=>{FOODS.forEach(f=>state.qty[f.id]=0);state.water=0;renderAll();renderFoods()};document.getElementById('saveBtn').onclick=()=>{const t=totals();const items=Object.values(state.qty).reduce((a,b)=>a+(+b||0),0);state.history.push({date:new Date().toLocaleDateString('es-CL'),kcal:Math.round(t.kcal),protein:Math.round(t.protein),carbs:Math.round(t.carbs),fat:Math.round(t.fat),water:t.water.toFixed(1),items});saveLocal();switchScreen('historial')};document.getElementById('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({targets:TARGETS,groups:GROUPS,qty:state.qty,water:state.water,history:state.history},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nutritrack-iphone-datos.json';a.click();URL.revokeObjectURL(a.href)};document.getElementById('themeBtn').onclick=()=>{state.theme=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',state.theme);saveLocal()};document.documentElement.setAttribute('data-theme',state.theme);renderTabs();renderFoods();renderAll();
+</script>
+</body>
+</html>
