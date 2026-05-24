@@ -1,0 +1,21 @@
+{
+  "name": "NutriTrack — Nutrición Deportiva",
+  "short_name": "NutriTrack",
+  "description": "Registra tu alimentación y alcanza tus metas nutricionales",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "lang": "es-CL",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["health", "fitness"],
+  "screenshots": [],
+  "shortcuts": [
+    { "name": "Agregar comida", "url": "/?action=add", "description": "Registra un alimento rápidamente" },
+    { "name": "Ver historial", "url": "/?page=history", "description": "Ver historial de los últimos días" }
+  ]
+}
